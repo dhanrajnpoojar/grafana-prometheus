@@ -1,0 +1,30 @@
+# My Global config
+global:
+scrape_interval: 15s  #Set the scrape interval to every 15 seconds. Defaults is every 1minutes
+evaluation_interval: 15s  #Set the evaluation interval to every 15 seconds. Defaults is 1 minutes
+# scrape_timeout is set to the global defaults (10s)
+
+# Alertmanager Configuration
+alerting:
+ alertmanagers:
+ - static_configs:
+   - targets:
+     #- 127.0.0.1:9093
+
+#load rules once and periodically evaluate them accordingly to the global 'evaluate_iterval'
+rule_files:
+  - 'alerts.yml'
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+#scrape configuration containing exactly one end point to scrape.
+#here it's promotheus itself.
+scrape_configs:
+#The job name is added as a label 'job=<job_name>' to any timeseries to scraped from this config.
+- job_name: 'promotheus'
+
+  #metrics_path defaults to '/metrics'
+  #scheme defaults to 'http'.
+  
+  static_configs:
+  - targets: ['localhost:9090']
